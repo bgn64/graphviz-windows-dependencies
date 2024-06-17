@@ -1,5 +1,5 @@
 /* GIO - GLib Input, Output and Streaming Library
- *
+ * 
  * Copyright (C) 2006-2007 Red Hat, Inc.
  *
  * This library is free software; you can redistribute it and/or
@@ -13,19 +13,21 @@
  * Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General
- * Public License along with this library; if not, see <http://www.gnu.org/licenses/>.
+ * Public License along with this library; if not, write to the
+ * Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+ * Boston, MA 02111-1307, USA.
  *
  * Author: Alexander Larsson <alexl@redhat.com>
  */
-
-#ifndef __G_THEMED_ICON_H__
-#define __G_THEMED_ICON_H__
 
 #if !defined (__GIO_GIO_H_INSIDE__) && !defined (GIO_COMPILATION)
 #error "Only <gio/gio.h> can be included directly."
 #endif
 
-#include <gio/giotypes.h>
+#ifndef __G_THEMED_ICON_H__
+#define __G_THEMED_ICON_H__
+
+#include <gio/gicon.h>
 
 G_BEGIN_DECLS
 
@@ -38,30 +40,20 @@ G_BEGIN_DECLS
 
 /**
  * GThemedIcon:
- *
+ * 
  * An implementation of #GIcon for themed icons.
  **/
+typedef struct _GThemedIcon        GThemedIcon;
 typedef struct _GThemedIconClass   GThemedIconClass;
 
-GLIB_AVAILABLE_IN_ALL
-GType  g_themed_icon_get_type                   (void) G_GNUC_CONST;
+GType g_themed_icon_get_type (void) G_GNUC_CONST;
+  
+GIcon *g_themed_icon_new (const char *iconname);
+GIcon *g_themed_icon_new_with_default_fallbacks (const char *iconname);
+GIcon *g_themed_icon_new_from_names (char **iconnames, int len);
+void   g_themed_icon_append_name (GThemedIcon *icon, const char *iconname);
 
-GLIB_AVAILABLE_IN_ALL
-GIcon *g_themed_icon_new                        (const char  *iconname);
-GLIB_AVAILABLE_IN_ALL
-GIcon *g_themed_icon_new_with_default_fallbacks (const char  *iconname);
-GLIB_AVAILABLE_IN_ALL
-GIcon *g_themed_icon_new_from_names             (char       **iconnames,
-                                                 int          len);
-GLIB_AVAILABLE_IN_ALL
-void   g_themed_icon_prepend_name               (GThemedIcon *icon,
-                                                 const char  *iconname);
-GLIB_AVAILABLE_IN_ALL
-void   g_themed_icon_append_name                (GThemedIcon *icon,
-                                                 const char  *iconname);
-
-GLIB_AVAILABLE_IN_ALL
-const gchar* const * g_themed_icon_get_names     (GThemedIcon *icon);
+const char * const *g_themed_icon_get_names (GThemedIcon *icon);
 
 G_END_DECLS
 

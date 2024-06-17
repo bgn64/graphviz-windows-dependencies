@@ -12,7 +12,9 @@
  * Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General
- * Public License along with this library; if not, see <http://www.gnu.org/licenses/>.
+ * Public License along with this library; if not, write to the
+ * Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+ * Boston, MA 02111-1307, USA.
  */
 #ifndef __GLIB_GOBJECT_H__
 #define __GLIB_GOBJECT_H__
@@ -20,22 +22,19 @@
 #define __GLIB_GOBJECT_H_INSIDE__
 
 /* topmost include file for GObject header files */
-#include <gobject/gbinding.h>
-#include <gobject/gboxed.h>
-#include <gobject/genums.h>
-#include <gobject/gobject.h>
-#include <gobject/gparam.h>
-#include <gobject/gparamspecs.h>
-#include <gobject/gsignal.h>
-#include <gobject/gsourceclosure.h>
-#include <gobject/gtype.h>
-#include <gobject/gtypemodule.h>
-#include <gobject/gtypeplugin.h>
-#include <gobject/gvalue.h>
-#include <gobject/gvaluearray.h>
-#include <gobject/gvaluetypes.h>
-
-#include <gobject/gobject-autocleanups.h>
+#include	<gobject/gboxed.h>
+#include	<gobject/genums.h>
+#include	<gobject/gobject.h>
+#include	<gobject/gparam.h>
+#include	<gobject/gparamspecs.h>
+#include	<gobject/gsignal.h>
+#include	<gobject/gsourceclosure.h>
+#include	<gobject/gtype.h>
+#include	<gobject/gtypemodule.h>
+#include	<gobject/gtypeplugin.h>
+#include	<gobject/gvalue.h>
+#include	<gobject/gvaluearray.h>
+#include	<gobject/gvaluetypes.h>
 
 #undef __GLIB_GOBJECT_H_INSIDE__
 
