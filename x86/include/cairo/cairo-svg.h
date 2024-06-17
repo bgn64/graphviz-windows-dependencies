@@ -14,7 +14,7 @@
  *
  * You should have received a copy of the LGPL along with this library
  * in the file COPYING-LGPL-2.1; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Suite 500, Boston, MA 02110-1335, USA
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  * You should have received a copy of the MPL along with this library
  * in the file COPYING-MPL-1.1
  *
@@ -32,7 +32,7 @@
 #ifndef CAIRO_SVG_H
 #define CAIRO_SVG_H
 
-#include "cairo.h"
+#include <cairo.h>
 
 #if CAIRO_HAS_SVG_SURFACE
 
@@ -40,14 +40,12 @@ CAIRO_BEGIN_DECLS
 
 /**
  * cairo_svg_version_t:
- * @CAIRO_SVG_VERSION_1_1: The version 1.1 of the SVG specification. (Since 1.2)
- * @CAIRO_SVG_VERSION_1_2: The version 1.2 of the SVG specification. (Since 1.2)
+ * @CAIRO_SVG_VERSION_1_1: The version 1.1 of the SVG specification.
+ * @CAIRO_SVG_VERSION_1_2: The version 1.2 of the SVG specification.
  *
  * #cairo_svg_version_t is used to describe the version number of the SVG
  * specification that a generated SVG file will conform to.
- *
- * Since: 1.2
- **/
+ */
 typedef enum _cairo_svg_version {
     CAIRO_SVG_VERSION_1_1,
     CAIRO_SVG_VERSION_1_2
