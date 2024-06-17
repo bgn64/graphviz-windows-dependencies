@@ -19,4 +19,4 @@ These precompiled libraries are used for building and running Graphviz on Window
 | LibTool | compatibility header | compatibility header |
 | Pango and pangocairco | yes | - |
 | PNG | yes | - |
-| [zlib](http://windows.php.net/downloads/php-sdk/deps/vc14/x64/) | 1.2.8 | 1.2.8 |
+| zlib | 1.2.3 | - |
