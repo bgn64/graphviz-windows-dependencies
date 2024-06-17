@@ -23,7 +23,6 @@
 #define __PANGO_H__
 
 #include <pango/pango-attributes.h>
-#include <pango/pango-bidi-type.h>
 #include <pango/pango-break.h>
 #include <pango/pango-context.h>
 #include <pango/pango-coverage.h>
@@ -44,6 +43,5 @@
 #include <pango/pango-tabs.h>
 #include <pango/pango-types.h>
 #include <pango/pango-utils.h>
-#include <pango/pango-version-macros.h>
 
 #endif /* __PANGO_H__ */

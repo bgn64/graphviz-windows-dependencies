@@ -22,62 +22,12 @@
 #ifndef __PANGO_FC_FONT_MAP_H__
 #define __PANGO_FC_FONT_MAP_H__
 
-#include <pango/pango.h>
 #include <fontconfig/fontconfig.h>
+#include <pango/pango-fontmap.h>
 #include <pango/pangofc-decoder.h>
 #include <pango/pangofc-font.h>
 
 G_BEGIN_DECLS
-
-
-#ifdef PANGO_ENABLE_BACKEND
-
-/**
- * PangoFcFontsetKey:
- *
- * An opaque structure containing all the information needed for
- * loading a fontset with the PangoFc fontmap.
- *
- * Since: 1.24
- **/
-typedef struct _PangoFcFontsetKey  PangoFcFontsetKey;
-
-PANGO_AVAILABLE_IN_1_24
-PangoLanguage              *pango_fc_fontset_key_get_language      (const PangoFcFontsetKey *key);
-PANGO_AVAILABLE_IN_1_24
-const PangoFontDescription *pango_fc_fontset_key_get_description   (const PangoFcFontsetKey *key);
-PANGO_AVAILABLE_IN_1_24
-const PangoMatrix          *pango_fc_fontset_key_get_matrix        (const PangoFcFontsetKey *key);
-PANGO_AVAILABLE_IN_1_24
-double                      pango_fc_fontset_key_get_absolute_size (const PangoFcFontsetKey *key);
-PANGO_AVAILABLE_IN_1_24
-double                      pango_fc_fontset_key_get_resolution    (const PangoFcFontsetKey *key);
-PANGO_AVAILABLE_IN_1_24
-gpointer                    pango_fc_fontset_key_get_context_key   (const PangoFcFontsetKey *key);
-
-/**
- * PangoFcFontKey:
- *
- * An opaque structure containing all the information needed for
- * loading a font with the PangoFc fontmap.
- *
- * Since: 1.24
- **/
-typedef struct _PangoFcFontKey     PangoFcFontKey;
-
-PANGO_AVAILABLE_IN_1_24
-const FcPattern   *pango_fc_font_key_get_pattern     (const PangoFcFontKey *key);
-PANGO_AVAILABLE_IN_1_24
-const PangoMatrix *pango_fc_font_key_get_matrix      (const PangoFcFontKey *key);
-PANGO_AVAILABLE_IN_1_24
-gpointer           pango_fc_font_key_get_context_key (const PangoFcFontKey *key);
-
-#endif
-
-
-/*
- * PangoFcFontMap
- */
 
 #define PANGO_TYPE_FC_FONT_MAP              (pango_fc_font_map_get_type ())
 #define PANGO_FC_FONT_MAP(object)           (G_TYPE_CHECK_INSTANCE_CAST ((object), PANGO_TYPE_FC_FONT_MAP, PangoFcFontMap))
@@ -111,10 +61,10 @@ struct _PangoFcFontMap
 
 /**
  * PangoFcFontMapClass:
- * @default_substitute: (nullable): Substitutes in default
- *  values for unspecified fields in a #FcPattern. This will
- *  be called prior to creating a font for the pattern. May be
- *  %NULL.  Deprecated in favor of @font_key_substitute().
+ * @default_substitute: Substitutes in default values for
+ *  unspecified fields in a #FcPattern. This will be called
+ *  prior to creating a font for the pattern. May be %NULL.
+ *  Deprecated in favor of @context_substitute().
  * @new_font: Creates a new #PangoFcFont for the specified
  *  pattern of the appropriate type for this font map. The
  *  @pattern argument must be passed to the "pattern" property
@@ -126,7 +76,7 @@ struct _PangoFcFontMap
  *  may be null.
  * @context_key_get: Gets an opaque key holding backend
  *  specific options for the context that will affect
- *  fonts created by @create_font(). The result must point to
+ *  fonts created by create_font(). The result must point to
  *  persistant storage owned by the fontmap. This key
  *  is used to index hash tables used to look up fontsets
  *  and fonts.
@@ -137,18 +87,15 @@ struct _PangoFcFontMap
  *  @context_key_copy.
  * @context_key_hash: Gets a hash value for a context key
  * @context_key_equal: Compares two context keys for equality.
- * @fontset_key_substitute: (nullable): Substitutes in
- *  default values for unspecified fields in a
- *  #FcPattern. This will be called prior to creating a font
- *  for the pattern. May be %NULL.  (Since: 1.24)
- * @create_font: (nullable): Creates a new #PangoFcFont for
- *  the specified pattern of the appropriate type for this
- *  font map using information from the font key that is
- *  passed in. The @pattern member of @font_key can be
- *  retrieved using pango_fc_font_key_get_pattern() and must
- *  be passed to the "pattern" property of #PangoFcFont when
- *  you call g_object_new().  If %NULL, new_font() is used.
- *  (Since: 1.24)
+ * @create_font: Creates a new #PangoFcFont for the specified
+ *  pattern of the appropriate type for this font map using
+ *  information from the context that is passed in. The
+ *  @pattern argument must be passed to the "pattern" property
+ *  of #PangoFcFont when you call g_object_new(). Deprecated
+ *  in favor of @create_font(). If %NULL, new_font() is used.
+ * @context_substitute: Substitutes in default values for
+ *  unspecified fields in a #FcPattern. This will be called
+ *  prior to creating a font for the pattern. May be %NULL.
  *
  * Class structure for #PangoFcFontMap.
  **/
@@ -158,7 +105,7 @@ struct _PangoFcFontMapClass
   PangoFontMapClass parent_class;
 
   /*< public >*/
-  /* Deprecated in favor of fontset_key_substitute */
+  /* Deprecated in favor of context_substitute */
   void         (*default_substitute) (PangoFcFontMap   *fontmap,
 				      FcPattern        *pattern);
   /* Deprecated in favor of create_font */
@@ -179,12 +126,14 @@ struct _PangoFcFontMapClass
   gboolean     (*context_key_equal)  (PangoFcFontMap             *fcfontmap,
 				      gconstpointer               key_a,
 				      gconstpointer               key_b);
-  void         (*fontset_key_substitute)(PangoFcFontMap             *fontmap,
 
-				      PangoFcFontsetKey          *fontsetkey,
+  void         (*context_substitute) (PangoFcFontMap             *fontmap,
+				      PangoContext               *context,
 				      FcPattern                  *pattern);
   PangoFcFont  *(*create_font)       (PangoFcFontMap             *fontmap,
-				      PangoFcFontKey             *fontkey);
+				      PangoContext               *context,
+				      const PangoFontDescription *desc,
+				      FcPattern                  *pattern);
   /*< private >*/
 
   /* Padding for future expansion */
@@ -194,32 +143,13 @@ struct _PangoFcFontMapClass
   void (*_pango_reserved4) (void);
 };
 
-#ifndef PANGO_DISABLE_DEPRECATED
-PANGO_DEPRECATED_IN_1_22_FOR(pango_font_map_create_context)
 PangoContext * pango_fc_font_map_create_context (PangoFcFontMap *fcfontmap);
-#endif
-PANGO_AVAILABLE_IN_1_4
+void           pango_fc_font_map_cache_clear    (PangoFcFontMap *fcfontmap);
 void           pango_fc_font_map_shutdown       (PangoFcFontMap *fcfontmap);
 
 #endif
 
-PANGO_AVAILABLE_IN_ALL
 GType pango_fc_font_map_get_type (void) G_GNUC_CONST;
-
-PANGO_AVAILABLE_IN_1_4
-void           pango_fc_font_map_cache_clear    (PangoFcFontMap *fcfontmap);
-
-PANGO_AVAILABLE_IN_1_38
-void
-pango_fc_font_map_config_changed (PangoFcFontMap *fcfontmap);
-
-PANGO_AVAILABLE_IN_1_38
-void
-pango_fc_font_map_set_config (PangoFcFontMap *fcfontmap,
-			      FcConfig       *fcconfig);
-PANGO_AVAILABLE_IN_1_38
-FcConfig *
-pango_fc_font_map_get_config (PangoFcFontMap *fcfontmap);
 
 /**
  * PangoFcDecoderFindFunc:
@@ -234,16 +164,11 @@ pango_fc_font_map_get_config (PangoFcFontMap *fcfontmap);
 typedef PangoFcDecoder * (*PangoFcDecoderFindFunc) (FcPattern *pattern,
 						    gpointer   user_data);
 
-PANGO_AVAILABLE_IN_1_6
 void pango_fc_font_map_add_decoder_find_func (PangoFcFontMap        *fcfontmap,
 					      PangoFcDecoderFindFunc findfunc,
 					      gpointer               user_data,
 					      GDestroyNotify         dnotify);
-PANGO_AVAILABLE_IN_1_26
-PangoFcDecoder *pango_fc_font_map_find_decoder (PangoFcFontMap *fcfontmap,
-					        FcPattern      *pattern);
 
-PANGO_AVAILABLE_IN_1_4
 PangoFontDescription *pango_fc_font_description_from_pattern (FcPattern *pattern,
 							      gboolean   include_size);
 
@@ -252,11 +177,9 @@ PangoFontDescription *pango_fc_font_description_from_pattern (FcPattern *pattern
  *
  * String representing a fontconfig property name that Pango sets on any
  * fontconfig pattern it passes to fontconfig if a #PangoGravity other
- * than %PANGO_GRAVITY_SOUTH is desired.
+ * than %PangoGravitySouth is desired.
  *
  * The property will have a #PangoGravity value as a string, like "east".
- * This can be used to write fontconfig configuration rules to choose
- * different fonts for horizontal and vertical writing directions.
  *
  * Since: 1.20
  */
@@ -270,46 +193,10 @@ PangoFontDescription *pango_fc_font_description_from_pattern (FcPattern *pattern
  *
  * The property will have an integer value equal to what
  * pango_version() returns.
- * This can be used to write fontconfig configuration rules that only affect
- * certain pango versions (or only pango-using applications, or only
- * non-pango-using applications).
  *
  * Since: 1.20
  */
 #define PANGO_FC_VERSION "pangoversion"
-
-/**
- * PANGO_FC_PRGNAME:
- *
- * String representing a fontconfig property name that Pango sets on any
- * fontconfig pattern it passes to fontconfig.
- *
- * The property will have a string equal to what
- * g_get_prgname() returns.
- * This can be used to write fontconfig configuration rules that only affect
- * certain applications.
- *
- * This is equivalent to FC_PRGNAME in versions of fontconfig that have that.
- *
- * Since: 1.24
- */
-#define PANGO_FC_PRGNAME "prgname"
-
-/**
- * PANGO_FC_FONT_FEATURES:
- *
- * String representing a fontconfig property name that Pango reads from font
- * patterns to populate list of OpenType features to be enabled for the font
- * by default.
- *
- * The property will have a number of string elements, each of which is the
- * OpenType feature tag of one feature to enable.
- *
- * This is equivalent to FC_FONT_FEATURES in versions of fontconfig that have that.
- *
- * Since: 1.34
- */
-#define PANGO_FC_FONT_FEATURES "fontfeatures"
 
 G_END_DECLS
 
