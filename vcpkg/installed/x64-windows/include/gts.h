@@ -38,7 +38,7 @@ extern "C" {
  * we prefix variable declarations so they can
  * properly get exported in windows dlls.
  */
-#if 0
+#if 1
 #  ifdef GTS_COMPILATION
 #    define GTS_C_VAR __declspec(dllexport)
 #  else /* not GTS_COMPILATION */
