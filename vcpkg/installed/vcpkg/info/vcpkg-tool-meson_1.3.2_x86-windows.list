@@ -1,0 +1,15 @@
+x86-windows/
+x86-windows/share/
+x86-windows/share/vcpkg-tool-meson/
+x86-windows/share/vcpkg-tool-meson/adjust-args.patch
+x86-windows/share/vcpkg-tool-meson/adjust-python-dep.patch
+x86-windows/share/vcpkg-tool-meson/copyright
+x86-windows/share/vcpkg-tool-meson/meson-1.4-llvm-18.diff
+x86-windows/share/vcpkg-tool-meson/meson-intl.patch
+x86-windows/share/vcpkg-tool-meson/meson.template.in
+x86-windows/share/vcpkg-tool-meson/remove-freebsd-pcfile-specialization.patch
+x86-windows/share/vcpkg-tool-meson/vcpkg-port-config.cmake
+x86-windows/share/vcpkg-tool-meson/vcpkg.spdx.json
+x86-windows/share/vcpkg-tool-meson/vcpkg_abi_info.txt
+x86-windows/share/vcpkg-tool-meson/vcpkg_configure_meson.cmake
+x86-windows/share/vcpkg-tool-meson/vcpkg_install_meson.cmake

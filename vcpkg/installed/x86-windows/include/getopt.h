@@ -5,7 +5,7 @@ to provide a Microsoft Visual C friendly derivative. This code
 provides functionality for both Unicode and Multibyte builds.
 
 Date: 02/03/2011 - Ludvik Jerabek - Initial Release
-Version: 1.0
+Version: 1.1
 Comment: Supports getopt, getopt_long, and getopt_long_only
 and POSIXLY_CORRECT environment flag
 License: LGPL
@@ -21,6 +21,8 @@ Revisions:
 08/01/2012 - Ludvik Jerabek - Created separate functions for char and wchar_t characters so single dll can do both unicode and ansi
 10/15/2012 - Ludvik Jerabek - Modified to match latest GNU features
 06/19/2015 - Ludvik Jerabek - Fixed maximum option limitation caused by option_a (255) and option_w (65535) structure val variable
+09/24/2022 - Ludvik Jerabek - Updated to match most recent getopt release
+09/25/2022 - Ludvik Jerabek - Fixed memory allocation (malloc call) issue for wchar_t*
 
 **DISCLAIMER**
 THIS MATERIAL IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
@@ -57,12 +59,12 @@ EXPRESSLY ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 	// Change behavior for C\C++
 	#ifdef __cplusplus
-		#define _BEGIN_EXTERN_C extern "C" {
-		#define _END_EXTERN_C }
+		#define _GETOPT_BEGIN_EXTERN_C extern "C" {
+		#define _GETOPT_END_EXTERN_C }
 		#define _GETOPT_THROW throw()
 	#else
-		#define _BEGIN_EXTERN_C
-		#define _END_EXTERN_C
+		#define _GETOPT_BEGIN_EXTERN_C
+		#define _GETOPT_END_EXTERN_C
 		#define _GETOPT_THROW
 	#endif
 
@@ -81,7 +83,7 @@ EXPRESSLY ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 	#include <string.h>
 	#include <wchar.h>
 
-_BEGIN_EXTERN_C
+_GETOPT_BEGIN_EXTERN_C
 
 	extern _GETOPT_API int optind;
 	extern _GETOPT_API int opterr;
@@ -113,10 +115,10 @@ _BEGIN_EXTERN_C
 	extern _GETOPT_API int getopt_long_w(int argc, wchar_t *const *argv, const wchar_t *options, const struct option_w *long_options, int *opt_index) _GETOPT_THROW;
 	extern _GETOPT_API int getopt_long_only_w(int argc, wchar_t *const *argv, const wchar_t *options, const struct option_w *long_options, int *opt_index) _GETOPT_THROW;	
 	
-_END_EXTERN_C
+_GETOPT_END_EXTERN_C
 
-	#undef _BEGIN_EXTERN_C
-	#undef _END_EXTERN_C
+	#undef _GETOPT_BEGIN_EXTERN_C
+	#undef _GETOPT_END_EXTERN_C
 	#undef _GETOPT_THROW
 	#undef _GETOPT_API
 

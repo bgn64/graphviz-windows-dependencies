@@ -1,0 +1,10 @@
+x86-windows/
+x86-windows/share/
+x86-windows/share/vcpkg-cmake-get-vars/
+x86-windows/share/vcpkg-cmake-get-vars/cmake_get_vars/
+x86-windows/share/vcpkg-cmake-get-vars/cmake_get_vars/CMakeLists.txt
+x86-windows/share/vcpkg-cmake-get-vars/copyright
+x86-windows/share/vcpkg-cmake-get-vars/vcpkg-port-config.cmake
+x86-windows/share/vcpkg-cmake-get-vars/vcpkg.spdx.json
+x86-windows/share/vcpkg-cmake-get-vars/vcpkg_abi_info.txt
+x86-windows/share/vcpkg-cmake-get-vars/vcpkg_cmake_get_vars.cmake

@@ -1,0 +1,9 @@
+x86-windows/
+x86-windows/share/
+x86-windows/share/gperf/
+x86-windows/share/gperf/copyright
+x86-windows/share/gperf/vcpkg.spdx.json
+x86-windows/share/gperf/vcpkg_abi_info.txt
+x86-windows/tools/
+x86-windows/tools/gperf/
+x86-windows/tools/gperf/gperf.exe
