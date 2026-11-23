@@ -41,6 +41,7 @@ x86-windows/share/
 x86-windows/share/brotli/
 x86-windows/share/brotli/copyright
 x86-windows/share/brotli/usage
+x86-windows/share/brotli/vcpkg-spdx-resources.json
 x86-windows/share/brotli/vcpkg.spdx.json
 x86-windows/share/brotli/vcpkg_abi_info.txt
 x86-windows/share/unofficial-brotli/
